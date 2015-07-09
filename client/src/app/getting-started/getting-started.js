@@ -1,3 +1,5 @@
+var theHttp;
+
 (function() {
   'use strict';
 
@@ -22,7 +24,9 @@
    * @name  gettingStartedCtrl
    * @description Controller
    */
-  function GettingStartedCtrl($log, $state, Backand, BackandService) {
+  function GettingStartedCtrl($log, $state, $http, Backand, BackandService) {
+
+  	theHttp = $http;
 
     var start = this;
 
@@ -57,10 +61,6 @@
       $state.go('root.getting-started',{}, {reload: true});
     }
 
-start.file_changed = function(element) {
-	alert('file_changed: element='+element);
-}
-
     function loadObjects() {
       BackandService.listOfObjects().then(loadObjectsSuccess, errorHandler);
     }
@@ -85,5 +85,50 @@ start.file_changed = function(element) {
 
   angular.module('getting-started', [])
     .config(config)
-    .controller('GettingStartedCtrl', ['$log', '$state', 'Backand','BackandService', GettingStartedCtrl]);
+    .controller('GettingStartedCtrl', ['$log', '$state', '$http', 'Backand','BackandService', GettingStartedCtrl]);
 })();
+
+var start={};
+
+start.s3_doUpdate = function(filename, theBase64Data)
+{
+	start.s3update 
+	var req = {
+	 method: 'POST',
+	 url: 'http://localhost:24681',
+	 headers: {
+	   'Content-Type': undefined
+	 },
+	 data: 
+		{
+		"region":"us-east-1",
+		"bucket":"backand-east-1",
+		"key":"AKIAI24P3PN2VNCXVCSA",
+		"secret_key":"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",
+		"file":filename,
+		"data":theBase64Data
+		}
+	}	
+
+	theHttp(req).success(function(res){
+		alert('res='+res);
+	}).error(function(err){
+		alert('err='+err);
+	});
+}
+
+
+start.file_changed = function(element) {
+		var data = element;
+     // $apply(function(scope) {
+         var photofile = element.files[0];
+         var reader = new FileReader();
+         reader.onload = function(e) {
+         	var b64 = e.currentTarget.result;
+         	start.s3_doUpdate(b64);
+         };
+         reader.readAsDataURL(photofile);
+     // });
+
+}
+

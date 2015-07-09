@@ -31,11 +31,11 @@
     </h3>
 <hr>
 
-<input ng-model="photo"
-       ng-onchange="start.file_changed(this)"
+<input ng-model="start.photo"
+       onchange="start.file_changed(this)"
        type="file" accept="image/*" />
 
-<button ng-click="start.file_changed(this)">UPLOAD!</button>
+       <button ng-click="start.file_changed(this)">Upload</button>
 
 <!-- END OF NEW PART -->
 
