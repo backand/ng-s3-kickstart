@@ -57,6 +57,10 @@
       $state.go('root.getting-started',{}, {reload: true});
     }
 
+start.file_changed = function(element) {
+	alert('file_changed: element='+element);
+}
+
     function loadObjects() {
       BackandService.listOfObjects().then(loadObjectsSuccess, errorHandler);
     }

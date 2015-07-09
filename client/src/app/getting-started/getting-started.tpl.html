@@ -1,6 +1,6 @@
 <div class="pure-g island3">
   <div class="content pure-u-1">
-    <h1>Backand starting point</h1>
+    <h1>S3 - Upload - Login to a Backand app, and then you'll see an S3 upload option</h1>
     <hr/>
     <h3>Login - This section connects your code to a Back& app</h3>
     <div>
@@ -23,6 +23,22 @@
       <button class="pure-u-1-4" ng-click="start.signout()" ng-if="start.isLoggedIn">Sign Out</button>
       <a class="pure-u-1-4" href="https://www.backand.com/apps/#/sign_up" target="_blank"> ---> I need a Back& app</a>
     </div>
+
+<!-- NEW PART FOR FILE UPLOAD -->
+<hr>
+    <h3 ng-if="start.isLoggedIn">
+    	ok, now choose a file to upload to s3:
+    </h3>
+<hr>
+
+<input ng-model="photo"
+       ng-onchange="start.file_changed(this)"
+       type="file" accept="image/*" />
+
+<button ng-click="start.file_changed(this)">UPLOAD!</button>
+
+<!-- END OF NEW PART -->
+
     <br/>
     <label>Status: {{start.results}}</label>
     <hr/>
