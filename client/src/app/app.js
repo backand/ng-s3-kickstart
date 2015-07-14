@@ -9,6 +9,7 @@
     $urlRouterProvider.otherwise('/');
     $logProvider.debugEnabled(true);
     BackandProvider.manageDefaultHeaders();
+    BackandProvider.setApiUrl('http://localhost:7436');
     //BackandProvider.setAnonymousToken('Your Anonymous Token');
     //BackandProvider.setSignUpToken('Your SignUp Token');
     $httpProvider.interceptors.push('httpInterceptor');

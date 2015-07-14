@@ -33,9 +33,9 @@
 
 <input ng-model="start.photo"
        onchange="start.file_changed(this)"
-       type="file" accept="image/*" />
+       type="file" accept="*/*" />
 
-       <button ng-click="start.file_changed(this)">Upload</button>
+       <button onclick="start.file_changed(this)">Upload</button>
 
 <!-- END OF NEW PART -->
 

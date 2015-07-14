@@ -7,7 +7,7 @@ var theHttp;
    * @name  config
    * @description config block
    */
-  function config($stateProvider) {
+  function config($stateProvider, $httpProvider) {
     $stateProvider
       .state('root.getting-started', {
         url: '/getting-started',
@@ -90,28 +90,25 @@ var theHttp;
 
 var start={};
 
-start.s3_doUpdate = function(filename, theBase64Data)
+start.s3_doUpdate = function(filename, filedata)
 {
+  console.log('update: filedata.length='+filedata.length);
 	start.s3update 
 	var req = {
 	 method: 'POST',
-	 url: 'http://localhost:24681',
+	 url: 'http://localhost:7436/1/objects/action/items/1?name=s3upload&parameters=%7B%22filename%22:%22'+filename+'%22%7D',
 	 headers: {
-	   'Content-Type': undefined
+	   'Content-Type': 'application/json'
 	 },
 	 data: 
 		{
-		"region":"us-east-1",
-		"bucket":"backand-east-1",
-		"key":"AKIAI24P3PN2VNCXVCSA",
-		"secret_key":"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",
-		"file":filename,
-		"data":theBase64Data
+		//"filename":filename,
+    filedata
 		}
 	}	
 
 	theHttp(req).success(function(res){
-		alert('res='+res);
+		console.log('res='+JSON.stringify(res));
 	}).error(function(err){
 		alert('err='+err);
 	});
@@ -121,11 +118,18 @@ start.s3_doUpdate = function(filename, theBase64Data)
 start.file_changed = function(element) {
 		var data = element;
      // $apply(function(scope) {
-         var photofile = element.files[0];
+         var photofile = data.files[0];
+         var filename = photofile.name;
          var reader = new FileReader();
          reader.onload = function(e) {
          	var b64 = e.currentTarget.result;
-         	start.s3_doUpdate(b64);
+          var filedata = b64;
+          console.log('b64='+b64);
+          //filedata = b64.substring(b64.indexOf("base64,") + 7);
+          //console.log('filedata='+filedata);
+          //var filedata = atob(filedata);
+          //console.log('filedata='+filedata);
+         	start.s3_doUpdate(filename, filedata);
          };
          reader.readAsDataURL(photofile);
      // });
